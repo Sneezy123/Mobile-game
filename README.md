@@ -19,3 +19,7 @@ If you run into trouble, help is available in [our forum](https://forum.defold.c
 Happy Defolding!
 
 ---
+
+**First Error**
+
+![Image of first error ever](https://i.imgur.com/aptAd4R.png)
