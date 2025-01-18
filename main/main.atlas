@@ -1,9 +1,32 @@
 images {
   image: "/assets/app_icons/icon_180.png"
 }
-images {
-  image: "/assets/background.png"
+animations {
+  id: "Background Dark"
+  images {
+    image: "/assets/img_background-dark.png"
+  }
+  playback: PLAYBACK_NONE
 }
-margin: 0
+animations {
+  id: "Background Light"
+  images {
+    image: "/assets/img_background-light.png"
+  }
+  playback: PLAYBACK_NONE
+}
+animations {
+  id: "Button Light"
+  images {
+    image: "/assets/img_button-light.png"
+  }
+  playback: PLAYBACK_NONE
+}
+animations {
+  id: "Button Dark"
+  images {
+    image: "/assets/img_button-dark.png"
+  }
+  playback: PLAYBACK_NONE
+}
 extrude_borders: 2
-inner_padding: 0

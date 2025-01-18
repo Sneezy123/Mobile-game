@@ -49,3 +49,6 @@ velocity_threshold = 100.0
 [html5]
 scale_mode = stretch
 
+[graphics]
+opengl_version_hint = 41
+
