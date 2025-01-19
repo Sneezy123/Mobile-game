@@ -1,0 +1,249 @@
+script: "/main/scripts/druid_ui.gui_script"
+fonts {
+  name: "UI Font"
+  font: "/main/UI Font.font"
+}
+textures {
+  name: "main"
+  texture: "/main/main.atlas"
+}
+nodes {
+  position {
+    x: 320.0
+    y: 568.0
+  }
+  type: TYPE_BOX
+  texture: "main/Background Light"
+  id: "bg"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_BOTTOM
+  adjust_mode: ADJUST_MODE_STRETCH
+  layer: "bg"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  type: TYPE_BOX
+  id: "root"
+  layer: "fg"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: 320.0
+    y: 875.0
+    z: 1.0
+  }
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  color {
+    x: 0.365
+    y: 0.212
+    z: 0.659
+  }
+  type: TYPE_BOX
+  id: "button"
+  parent: "root"
+  layer: "fg"
+  inherit_alpha: true
+  slice9 {
+    x: 45.0
+    y: 77.0
+    z: 45.0
+    w: 80.0
+  }
+}
+nodes {
+  scale {
+    x: 0.4
+    y: 0.4
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game"
+  font: "UI Font"
+  id: "text1"
+  parent: "button"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 320.0
+    y: 537.0
+    z: 1.0
+  }
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  color {
+    x: 0.365
+    y: 0.212
+    z: 0.659
+  }
+  type: TYPE_BOX
+  id: "button1"
+  parent: "root"
+  layer: "fg"
+  inherit_alpha: true
+  slice9 {
+    x: 45.0
+    y: 77.0
+    z: 45.0
+    w: 80.0
+  }
+}
+nodes {
+  scale {
+    x: 0.4
+    y: 0.4
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game"
+  font: "UI Font"
+  id: "text2"
+  parent: "button1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 320.0
+    y: 187.0
+    z: 1.0
+  }
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  color {
+    x: 0.365
+    y: 0.212
+    z: 0.659
+  }
+  type: TYPE_BOX
+  id: "button2"
+  parent: "root"
+  layer: "fg"
+  inherit_alpha: true
+  slice9 {
+    x: 45.0
+    y: 77.0
+    z: 45.0
+    w: 80.0
+  }
+}
+nodes {
+  scale {
+    x: 0.4
+    y: 0.4
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game"
+  font: "UI Font"
+  id: "text3"
+  parent: "button2"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 320.0
+    y: -166.0
+    z: 1.0
+  }
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  color {
+    x: 0.365
+    y: 0.212
+    z: 0.659
+  }
+  type: TYPE_BOX
+  id: "button3"
+  parent: "root"
+  layer: "fg"
+  inherit_alpha: true
+  slice9 {
+    x: 45.0
+    y: 77.0
+    z: 45.0
+    w: 80.0
+  }
+}
+nodes {
+  scale {
+    x: 0.4
+    y: 0.4
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game"
+  font: "UI Font"
+  id: "text4"
+  parent: "button3"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 320.0
+    y: 1103.0
+  }
+  size {
+    x: 640.0
+    y: 100.0
+  }
+  color {
+    x: 0.365
+    y: 0.212
+    z: 0.659
+  }
+  type: TYPE_BOX
+  id: "top_bar"
+  adjust_mode: ADJUST_MODE_STRETCH
+  layer: "fg"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  scale {
+    x: 0.3
+    y: 0.3
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Main Menu"
+  font: "UI Font"
+  id: "text"
+  parent: "top_bar"
+  inherit_alpha: true
+}
+layers {
+  name: "bg"
+}
+layers {
+  name: "fg"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

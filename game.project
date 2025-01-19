@@ -1,8 +1,9 @@
 [project]
 title = Mobile game
+dependencies#0 = https://github.com/Insality/druid/archive/refs/tags/1.0.zip
 
 [bootstrap]
-main_collection = /main/main.collectionc
+main_collection = /main/collections/start_menu.collectionc
 
 [input]
 game_binding = /input/game.input_bindingc
@@ -48,4 +49,7 @@ velocity_threshold = 100.0
 
 [html5]
 scale_mode = stretch
+
+[graphics]
+opengl_version_hint = 41
 
