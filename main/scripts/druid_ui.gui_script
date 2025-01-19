@@ -1,9 +1,13 @@
 local druid = require("druid.druid")
 
+
+
 function init(self)
 	self.druid = druid.new(self)
 	self.druid:new_button("top_bar", switch_appearence)
 
+	self.light_button_col = vmath.vector4(norm_rgb(54), norm_rgb(104), norm_rgb(164), 1)
+	self.dark_button_col = vmath.vector4(norm_rgb(44), norm_rgb(86), norm_rgb(135), 1)
 
 
 	self.dark_mode = true
@@ -12,9 +16,11 @@ function init(self)
 	for button in pairs(gui.get_tree(gui.get_node("root"))) do
 		if gui.get_visible(gui.get_node(button)) and gui.get_type(gui.get_node(button)) == gui.TYPE_BOX then
 			-- gui.play_flipbook(gui.get_node(button), "Button Dark")
-			gui.set_color(gui.get_node(button), vmath.vector4(norm_rgb(93), norm_rgb(54), norm_rgb(168), 1))
+			gui.set_color(gui.get_node(button), self.dark_button_col)
 		end
 	end
+
+	gui.set_color(gui.get_node("top_bar"), self.dark_button_col)
 	
 end
 
@@ -43,11 +49,11 @@ function switch_appearence(self)
 		for button in pairs(gui.get_tree(gui.get_node("root"))) do
 			if gui.get_visible(gui.get_node(button)) and gui.get_type(gui.get_node(button)) == gui.TYPE_BOX then
 				--gui.play_flipbook(gui.get_node(button), "Button Light")
-				gui.set_color(gui.get_node(button), vmath.vector4(norm_rgb(129), norm_rgb(93), norm_rgb(200), 1))
+				gui.set_color(gui.get_node(button), self.light_button_col)
 			end
 		end
 
-		gui.set_color(gui.get_node("top_bar"), vmath.vector4(norm_rgb(129), norm_rgb(93), norm_rgb(200), 1))
+		gui.set_color(gui.get_node("top_bar"), self.light_button_col)
 
 		self.dark_mode = false
 	else
@@ -55,11 +61,11 @@ function switch_appearence(self)
 		for button in pairs(gui.get_tree(gui.get_node("root"))) do
 			if gui.get_visible(gui.get_node(button)) and gui.get_type(gui.get_node(button)) == gui.TYPE_BOX then
 				--gui.play_flipbook(gui.get_node(button), "Button Dark")
-				gui.set_color(gui.get_node(button), vmath.vector4(norm_rgb(93), norm_rgb(54), norm_rgb(168), 1))
+				gui.set_color(gui.get_node(button), self.dark_button_col)
 			end
 		end
 
-		gui.set_color(gui.get_node("top_bar"), vmath.vector4(norm_rgb(93), norm_rgb(54), norm_rgb(168), 1))
+		gui.set_color(gui.get_node("top_bar"), self.dark_button_col)
 
 		self.dark_mode = true
 	end
