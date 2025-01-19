@@ -1,3 +1,4 @@
+script: "/main/scripts/druid_ui.gui_script"
 fonts {
   name: "UI Font"
   font: "/main/UI Font.font"
@@ -14,6 +15,9 @@ nodes {
   type: TYPE_BOX
   texture: "main/Background Light"
   id: "bg"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_BOTTOM
+  adjust_mode: ADJUST_MODE_STRETCH
   layer: "bg"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
@@ -28,16 +32,20 @@ nodes {
 }
 nodes {
   position {
-    x: 318.0
+    x: 320.0
     y: 875.0
     z: 1.0
   }
   size {
     x: 600.0
-    y: 350.0
+    y: 300.0
+  }
+  color {
+    x: 0.365
+    y: 0.212
+    z: 0.659
   }
   type: TYPE_BOX
-  texture: "main/Button Light"
   id: "button"
   parent: "root"
   layer: "fg"
@@ -67,16 +75,20 @@ nodes {
 }
 nodes {
   position {
-    x: 318.0
-    y: 570.0
+    x: 320.0
+    y: 537.0
     z: 1.0
   }
   size {
     x: 600.0
-    y: 350.0
+    y: 300.0
+  }
+  color {
+    x: 0.365
+    y: 0.212
+    z: 0.659
   }
   type: TYPE_BOX
-  texture: "main/Button Light"
   id: "button1"
   parent: "root"
   layer: "fg"
@@ -106,16 +118,20 @@ nodes {
 }
 nodes {
   position {
-    x: 318.0
-    y: 266.0
+    x: 320.0
+    y: 187.0
     z: 1.0
   }
   size {
     x: 600.0
-    y: 350.0
+    y: 300.0
+  }
+  color {
+    x: 0.365
+    y: 0.212
+    z: 0.659
   }
   type: TYPE_BOX
-  texture: "main/Button Light"
   id: "button2"
   parent: "root"
   layer: "fg"
@@ -145,16 +161,20 @@ nodes {
 }
 nodes {
   position {
-    x: 318.0
-    y: -39.0
+    x: 320.0
+    y: -166.0
     z: 1.0
   }
   size {
     x: 600.0
-    y: 350.0
+    y: 300.0
+  }
+  color {
+    x: 0.365
+    y: 0.212
+    z: 0.659
   }
   type: TYPE_BOX
-  texture: "main/Button Light"
   id: "button3"
   parent: "root"
   layer: "fg"
@@ -192,12 +212,13 @@ nodes {
     y: 100.0
   }
   color {
-    x: 0.506
-    y: 0.365
-    z: 0.784
+    x: 0.365
+    y: 0.212
+    z: 0.659
   }
   type: TYPE_BOX
   id: "top_bar"
+  adjust_mode: ADJUST_MODE_STRETCH
   layer: "fg"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
@@ -225,7 +246,4 @@ layers {
   name: "fg"
 }
 material: "/builtins/materials/gui.material"
-layouts {
-  name: "Landscape"
-}
 adjust_reference: ADJUST_REFERENCE_PARENT

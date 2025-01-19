@@ -1,0 +1,25 @@
+function init(self)
+	-- Add initialization code here
+	msg.post(".", "acquire_input_focus")
+	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
+	
+	
+
+	self.max_scroll_y = 150
+end
+
+function on_input(self, action_id, action)
+	local root_pos = gui.get_position(gui.get_node("root"))
+	local root_node = gui.get_node("root")
+	if action_id == hash("wheel_down") then
+		gui.set_position(root_node, vmath.clamp(root_pos + vmath.vector3(0, 10, 0), vmath.vector3(0, 0, 0), vmath.vector3(0, self.max_scroll_y, 0)))
+		
+	elseif action_id == hash("wheel_up") then
+		gui.set_position(root_node, vmath.clamp(root_pos + vmath.vector3(0, -10, 0), vmath.vector3(0, 0, 0), vmath.vector3(0, self.max_scroll_y, 0)))
+	end
+
+	if action_id == hash("left_button") and action.pressed then
+		switch_appearence(self)
+	end
+end
+
