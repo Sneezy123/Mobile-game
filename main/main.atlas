@@ -18,14 +18,14 @@ animations {
 animations {
   id: "Button Light"
   images {
-    image: "/assets/img_button-light.png"
+    image: "/assets/img_button-dark.png"
   }
   playback: PLAYBACK_NONE
 }
 animations {
   id: "Button Dark"
   images {
-    image: "/assets/img_button-dark.png"
+    image: "/assets/img_button-light.png"
   }
   playback: PLAYBACK_NONE
 }

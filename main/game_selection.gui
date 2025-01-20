@@ -8,53 +8,68 @@ textures {
   texture: "/main/main.atlas"
 }
 nodes {
+  type: TYPE_BOX
+  id: "root0"
+  adjust_mode: ADJUST_MODE_STRETCH
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
   position {
     x: 320.0
     y: 568.0
   }
   type: TYPE_BOX
   texture: "main/Background Light"
-  id: "bg"
+  id: "scroll_view"
   xanchor: XANCHOR_LEFT
   yanchor: YANCHOR_BOTTOM
   adjust_mode: ADJUST_MODE_STRETCH
+  parent: "root0"
   layer: "bg"
   inherit_alpha: true
+  clipping_mode: CLIPPING_MODE_STENCIL
   size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  type: TYPE_BOX
-  id: "root"
-  layer: "fg"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-  visible: false
 }
 nodes {
   position {
-    x: 320.0
-    y: 875.0
+    y: -158.0
+  }
+  size {
+    y: 1450.0
+  }
+  color {
+    x: 0.2
+    y: 0.2
+    z: 0.2
+  }
+  type: TYPE_BOX
+  id: "scroll_content"
+  parent: "scroll_view"
+  layer: "fg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 454.0
     z: 1.0
   }
   size {
     x: 600.0
     y: 300.0
   }
-  color {
-    x: 0.365
-    y: 0.212
-    z: 0.659
-  }
   type: TYPE_BOX
+  texture: "main/Button Dark"
   id: "button"
-  parent: "root"
+  yanchor: YANCHOR_TOP
+  parent: "scroll_content"
   layer: "fg"
   inherit_alpha: true
   slice9 {
-    x: 45.0
-    y: 77.0
-    z: 45.0
-    w: 80.0
+    x: 40.0
+    y: 40.0
+    z: 40.0
+    w: 40.0
   }
 }
 nodes {
@@ -75,29 +90,25 @@ nodes {
 }
 nodes {
   position {
-    x: 320.0
-    y: 537.0
+    y: 124.0
     z: 1.0
   }
   size {
     x: 600.0
     y: 300.0
   }
-  color {
-    x: 0.365
-    y: 0.212
-    z: 0.659
-  }
   type: TYPE_BOX
+  texture: "main/Button Dark"
   id: "button1"
-  parent: "root"
+  yanchor: YANCHOR_TOP
+  parent: "scroll_content"
   layer: "fg"
   inherit_alpha: true
   slice9 {
-    x: 45.0
-    y: 77.0
-    z: 45.0
-    w: 80.0
+    x: 40.0
+    y: 40.0
+    z: 40.0
+    w: 40.0
   }
 }
 nodes {
@@ -118,29 +129,25 @@ nodes {
 }
 nodes {
   position {
-    x: 320.0
-    y: 187.0
+    y: -206.0
     z: 1.0
   }
   size {
     x: 600.0
     y: 300.0
   }
-  color {
-    x: 0.365
-    y: 0.212
-    z: 0.659
-  }
   type: TYPE_BOX
+  texture: "main/Button Dark"
   id: "button2"
-  parent: "root"
+  yanchor: YANCHOR_TOP
+  parent: "scroll_content"
   layer: "fg"
   inherit_alpha: true
   slice9 {
-    x: 45.0
-    y: 77.0
-    z: 45.0
-    w: 80.0
+    x: 40.0
+    y: 40.0
+    z: 40.0
+    w: 40.0
   }
 }
 nodes {
@@ -161,29 +168,25 @@ nodes {
 }
 nodes {
   position {
-    x: 320.0
-    y: -166.0
+    y: -536.0
     z: 1.0
   }
   size {
     x: 600.0
     y: 300.0
   }
-  color {
-    x: 0.365
-    y: 0.212
-    z: 0.659
-  }
   type: TYPE_BOX
+  texture: "main/Button Dark"
   id: "button3"
-  parent: "root"
+  yanchor: YANCHOR_TOP
+  parent: "scroll_content"
   layer: "fg"
   inherit_alpha: true
   slice9 {
-    x: 45.0
-    y: 77.0
-    z: 45.0
-    w: 80.0
+    x: 40.0
+    y: 40.0
+    z: 40.0
+    w: 40.0
   }
 }
 nodes {
@@ -219,6 +222,7 @@ nodes {
   type: TYPE_BOX
   id: "top_bar"
   adjust_mode: ADJUST_MODE_STRETCH
+  parent: "root0"
   layer: "fg"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
