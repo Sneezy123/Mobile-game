@@ -1,0 +1,29 @@
+animations {
+  id: "Cross"
+  images {
+    image: "/assets/games/tic tac toe/img_cross-red-dark.png"
+  }
+  playback: PLAYBACK_NONE
+}
+animations {
+  id: "Circle"
+  images {
+    image: "/assets/games/tic tac toe/img_circle-blue-dark.png"
+  }
+  playback: PLAYBACK_NONE
+}
+animations {
+  id: "Field Dark"
+  images {
+    image: "/assets/games/tic tac toe/img_tictactoe-playfield-dark.png"
+  }
+  playback: PLAYBACK_NONE
+}
+animations {
+  id: "Field Light"
+  images {
+    image: "/assets/games/tic tac toe/img_tictactoe-playfield-light.png"
+  }
+  playback: PLAYBACK_NONE
+}
+extrude_borders: 2

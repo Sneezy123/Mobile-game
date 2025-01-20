@@ -1,0 +1,22 @@
+name: "proxies"
+scale_along_z: 0
+embedded_instances {
+  id: "contoller"
+  data: "components {\n"
+  "  id: \"proxy_contoller\"\n"
+  "  component: \"/main/scripts/util/proxy_contoller.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"main_menu\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/main/collections/start_menu.collection\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"tic_tac_toe\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/main/collections/tic_tac_toe.collection\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}

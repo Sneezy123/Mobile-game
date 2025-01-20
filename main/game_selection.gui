@@ -1,11 +1,11 @@
-script: "/main/scripts/druid_ui.gui_script"
+script: "/main/scripts/gui/druid_ui.gui_script"
 fonts {
   name: "UI Font"
   font: "/main/UI Font.font"
 }
 textures {
   name: "main"
-  texture: "/main/main.atlas"
+  texture: "/main/atlases/main.atlas"
 }
 nodes {
   type: TYPE_BOX
@@ -28,15 +28,14 @@ nodes {
   parent: "root0"
   layer: "bg"
   inherit_alpha: true
-  clipping_mode: CLIPPING_MODE_STENCIL
   size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    y: -158.0
+    y: 568.0
   }
   size {
-    y: 1450.0
+    y: 3070.0
   }
   color {
     x: 0.2
@@ -45,13 +44,16 @@ nodes {
   }
   type: TYPE_BOX
   id: "scroll_content"
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_N
+  adjust_mode: ADJUST_MODE_STRETCH
   parent: "scroll_view"
   layer: "fg"
   inherit_alpha: true
 }
 nodes {
   position {
-    y: 454.0
+    y: -260.0
     z: 1.0
   }
   size {
@@ -90,7 +92,7 @@ nodes {
 }
 nodes {
   position {
-    y: 124.0
+    y: -590.0
     z: 1.0
   }
   size {
@@ -129,7 +131,7 @@ nodes {
 }
 nodes {
   position {
-    y: -206.0
+    y: -920.0
     z: 1.0
   }
   size {
@@ -168,7 +170,7 @@ nodes {
 }
 nodes {
   position {
-    y: -536.0
+    y: -1250.0
     z: 1.0
   }
   size {
@@ -207,8 +209,203 @@ nodes {
 }
 nodes {
   position {
+    y: -1580.0
+    z: 1.0
+  }
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  texture: "main/Button Dark"
+  id: "button4"
+  yanchor: YANCHOR_TOP
+  parent: "scroll_content"
+  layer: "fg"
+  inherit_alpha: true
+  slice9 {
+    x: 40.0
+    y: 40.0
+    z: 40.0
+    w: 40.0
+  }
+}
+nodes {
+  scale {
+    x: 0.4
+    y: 0.4
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game"
+  font: "UI Font"
+  id: "text5"
+  parent: "button4"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: -1910.0
+    z: 1.0
+  }
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  texture: "main/Button Dark"
+  id: "button5"
+  yanchor: YANCHOR_TOP
+  parent: "scroll_content"
+  layer: "fg"
+  inherit_alpha: true
+  slice9 {
+    x: 40.0
+    y: 40.0
+    z: 40.0
+    w: 40.0
+  }
+}
+nodes {
+  scale {
+    x: 0.4
+    y: 0.4
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game"
+  font: "UI Font"
+  id: "text6"
+  parent: "button5"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: -2240.0
+    z: 1.0
+  }
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  texture: "main/Button Dark"
+  id: "button6"
+  yanchor: YANCHOR_TOP
+  parent: "scroll_content"
+  layer: "fg"
+  inherit_alpha: true
+  slice9 {
+    x: 40.0
+    y: 40.0
+    z: 40.0
+    w: 40.0
+  }
+}
+nodes {
+  scale {
+    x: 0.4
+    y: 0.4
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game"
+  font: "UI Font"
+  id: "text7"
+  parent: "button6"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: -2570.0
+    z: 1.0
+  }
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  texture: "main/Button Dark"
+  id: "button7"
+  yanchor: YANCHOR_TOP
+  parent: "scroll_content"
+  layer: "fg"
+  inherit_alpha: true
+  slice9 {
+    x: 40.0
+    y: 40.0
+    z: 40.0
+    w: 40.0
+  }
+}
+nodes {
+  scale {
+    x: 0.4
+    y: 0.4
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game"
+  font: "UI Font"
+  id: "text8"
+  parent: "button7"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: -2900.0
+    z: 1.0
+  }
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  texture: "main/Button Dark"
+  id: "button8"
+  yanchor: YANCHOR_TOP
+  parent: "scroll_content"
+  layer: "fg"
+  inherit_alpha: true
+  slice9 {
+    x: 40.0
+    y: 40.0
+    z: 40.0
+    w: 40.0
+  }
+}
+nodes {
+  scale {
+    x: 0.4
+    y: 0.4
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game"
+  font: "UI Font"
+  id: "text9"
+  parent: "button8"
+  inherit_alpha: true
+}
+nodes {
+  position {
     x: 320.0
-    y: 1103.0
+    y: 1086.0
   }
   size {
     x: 640.0

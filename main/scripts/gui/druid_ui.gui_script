@@ -1,30 +1,37 @@
 local druid = require("druid.druid")
+local my_style = require("main.scripts.util.druid_style")
 
+local function load_game(self, collection_name, button)
+	msg.post("proxies:/contoller#proxy_contoller", "show_proxy", { name = collection_name })
+end
+
+local function load_buttons(self)
+	self.druid:new_button("top_bar", function (self)
+		switch_appearence(self, self.dark_mode)
+	end)
+
+	self.druid:new_button("button", load_game, "tic_tac_toe")
+end
 
 
 function init(self)
-	self.druid = druid.new(self)
-	self.druid:new_button("top_bar", switch_appearence)
+	-- Initialize DRUID
+	self.druid = druid.new(self, my_style)
 
+	-- Setup up color theme
+	self.dark_mode = true
+	
 	self.light_button_col = vmath.vector4(norm_rgb(54), norm_rgb(104), norm_rgb(164), 1)
 	self.dark_button_col = vmath.vector4(norm_rgb(44), norm_rgb(86), norm_rgb(135), 1)
 
 	self.total_scroll_window_top = 0
 	self.total_scroll_window_bottom = 0
-
+	
+	load_buttons(self)
+	
 	-- Turn on dark mode initially
 	
-	self.dark_mode = true
-	gui.play_flipbook(gui.get_node("scroll_view"), "Background Dark")
-
-	for button in pairs(gui.get_tree(gui.get_node("scroll_content"))) do
-		if gui.get_color(gui.get_node(button)) == vmath.vector4(1) and gui.get_type(gui.get_node(button)) == gui.TYPE_BOX then
-			gui.play_flipbook(gui.get_node(button), "Button Dark")
-			--gui.set_color(gui.get_node(button), self.dark_button_col)
-		end
-	end
-
-	gui.set_color(gui.get_node("top_bar"), self.dark_button_col)
+	switch_appearence(self, false)
 
 	-- Set up scrolling
 
@@ -32,7 +39,7 @@ function init(self)
 		:set_extra_stretch_size(100)
 		:set_inert(true)
 		:set_horizontal_scroll(false)
-
+		
 		-- self.scroll_component:set_size(vmath.vector3(0,  self.total_scroll_window_top , 0), vmath.vector3(0,  self.total_scroll_window_bottom , 0)) 
 end	
 
@@ -53,14 +60,14 @@ function on_input(self, action_id, action)
 end
 
 
-function switch_appearence(self)
+function switch_appearence(self, dark_mode)
 	local bg_node = gui.get_node("scroll_view")
 
-	if self.dark_mode then
+	if dark_mode then
 		-- Set mode to light if dark mode is enabled
 		gui.play_flipbook(bg_node, "Background Light")
 		for button in pairs(gui.get_tree(gui.get_node("scroll_content"))) do
-			if gui.get_visible(gui.get_node(button)) and gui.get_type(gui.get_node(button)) == gui.TYPE_BOX then
+			if gui.get_color(gui.get_node(button)) == vmath.vector4(1) and gui.get_type(gui.get_node(button)) == gui.TYPE_BOX then
 				gui.play_flipbook(gui.get_node(button), "Button Light")
 				--gui.set_color(gui.get_node(button), self.light_button_col)
 			end
@@ -74,7 +81,7 @@ function switch_appearence(self)
 		
 		gui.play_flipbook(bg_node, "Background Dark")
 		for button in pairs(gui.get_tree(gui.get_node("scroll_content"))) do
-			if gui.get_visible(gui.get_node(button)) and gui.get_type(gui.get_node(button)) == gui.TYPE_BOX then
+			if gui.get_color(gui.get_node(button)) == vmath.vector4(1) and gui.get_type(gui.get_node(button)) == gui.TYPE_BOX then
 				gui.play_flipbook(gui.get_node(button), "Button Dark")
 				--gui.set_color(gui.get_node(button), self.dark_button_col)
 			end
