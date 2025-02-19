@@ -84,7 +84,7 @@ nodes {
     y: 100.0
   }
   type: TYPE_TEXT
-  text: "Game"
+  text: "Tic Tac Toe"
   font: "UI Font"
   id: "text1"
   parent: "button"
@@ -123,7 +123,7 @@ nodes {
     y: 100.0
   }
   type: TYPE_TEXT
-  text: "Game"
+  text: "Siedler von Catan"
   font: "UI Font"
   id: "text2"
   parent: "button1"

@@ -1,7 +1,8 @@
 local druid = require("druid.druid")
 local my_style = require("main.scripts.util.druid_style")
 
-local function load_game(self, collection_name, button)
+function load_game(self, collection_name, button)
+	print("Start of game")
 	msg.post("proxies:/contoller#proxy_contoller", "show_proxy", { name = collection_name })
 end
 
@@ -11,6 +12,7 @@ local function load_buttons(self)
 	end)
 
 	self.druid:new_button("button", load_game, "tic_tac_toe")
+	self.druid:new_button("button1", load_game, "siedler_von_catan")
 end
 
 
@@ -28,6 +30,10 @@ function init(self)
 	self.total_scroll_window_bottom = 0
 	
 	load_buttons(self)
+
+	local back_handler = self.druid:new_back_handler(function (self)
+        msg.post("@system:", "exit", { code = 0 })
+	end)
 	
 	-- Turn on dark mode initially
 	
@@ -95,4 +101,31 @@ end
 
 function norm_rgb(r)
 	return r / 255
+end
+
+function cmp_draw_order(a, b)
+	local a_lst = { }
+	local b_lst = { }
+	local nd = a
+
+	while nd ~= nil do
+		a_lst[#a_lst] = gui.get_index(nd)
+		nd = gui.get_parent(nd)
+	end
+
+	nd = b
+	while nd ~= nil do
+		b_lst[#b_lst] = gui.get_index(nd)
+		nd = gui.get_parent(nd)
+	end
+
+	for i = 0, #a_lst do
+		local aind = a_lst[#a_lst - i]
+		local bind = b_lst[#b_lst - i]
+		if aind ~= bind then
+			return not bind or (aind and aind > bind)
+		end
+	end
+
+	return false -- We should never get here.
 end

@@ -26,4 +26,11 @@ animations {
   }
   playback: PLAYBACK_NONE
 }
+animations {
+  id: "Line"
+  images {
+    image: "/assets/line_pixel.png"
+  }
+  playback: PLAYBACK_NONE
+}
 extrude_borders: 2

@@ -3,11 +3,19 @@ scale_along_z: 0
 embedded_instances {
   id: "root"
   children: "bg"
-  children: "cursor"
   children: "field"
+  children: "line"
   data: "components {\n"
   "  id: \"manager\"\n"
   "  component: \"/main/scripts/games/tic tac toe/manager.script\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"camera\"\n"
+  "  component: \"/main/game objects/camera.camera\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"game_overlay\"\n"
+  "  component: \"/main/game_overlay.gui\"\n"
   "}\n"
   ""
 }
@@ -27,16 +35,26 @@ embedded_instances {
   "  texture: \\\"/main/atlases/main.atlas\\\"\\n"
   "}\\n"
   "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"sprite1\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"Line\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/main/atlases/tic_tac_toe.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
   "  position {\n"
-  "    x: 320.0\n"
-  "    y: 568.0\n"
+  "    z: 1.5\n"
+  "  }\n"
+  "  scale {\n"
+  "    x: 1029.6963\n"
+  "    y: 1232.8395\n"
   "  }\n"
   "}\n"
   ""
-  position {
-    x: -149.0
-    y: -306.0
-  }
   scale3 {
     x: 1.48
     y: 1.48
@@ -44,19 +62,12 @@ embedded_instances {
   }
 }
 embedded_instances {
-  id: "cursor"
-  data: "components {\n"
-  "  id: \"cursor\"\n"
-  "  component: \"/in/cursor.script\"\n"
-  "}\n"
-  ""
-}
-embedded_instances {
   id: "field"
   data: "embedded_components {\n"
   "  id: \"cross_factory\"\n"
   "  type: \"factory\"\n"
   "  data: \"prototype: \\\"/main/game objects/tic_tac_toe_cross.go\\\"\\n"
+  "load_dynamically: true\\n"
   "\"\n"
   "}\n"
   "embedded_components {\n"
@@ -80,13 +91,42 @@ embedded_instances {
   "  texture: \\\"/main/atlases/tic_tac_toe.atlas\\\"\\n"
   "}\\n"
   "\"\n"
-  "  position {\n"
-  "    x: 320.0\n"
-  "    y: 568.0\n"
-  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"circle_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/main/game objects/tic_tac_toe_circle.go\\\"\\n"
+  "\"\n"
   "}\n"
   ""
   position {
     z: 0.1
+  }
+  scale3 {
+    x: 0.9
+    y: 0.9
+  }
+}
+embedded_instances {
+  id: "line"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"Line\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "size {\\n"
+  "  x: 1.0\\n"
+  "  y: 1.0\\n"
+  "}\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/main/atlases/tic_tac_toe.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: -600.0
+    z: 0.3
   }
 }

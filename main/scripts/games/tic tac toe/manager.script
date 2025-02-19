@@ -1,47 +1,249 @@
-function init(self)
-	msg.post(".", "acquire_input_focus")
-	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
+local druid = require("druid.druid")
+local my_style = require("main.scripts.util.druid_style")
 
-	factory.create("/field#cross_factory", vmath.vector3(320, 568, 0.2))
+local DISPLAY_WIDTH = sys.get_config_int("display.width")
+local DISPLAY_HEIGHT = sys.get_config_int("display.height")
+
+-- function to convert screen (mouse/touch) coordinates to
+-- world coordinates given a camera component
+-- this function will use the camera view and projection to
+-- translate the screen coordinates into world coordinates
+local function screen_to_world(x, y, z, camera_id)
+	local projection = camera.get_projection(camera_id)
+	local view = camera.get_view(camera_id)
+	local w, h = window.get_size()
+	-- The window.get_size() function will return the scaled window size,
+	-- ie taking into account display scaling (Retina screens on macOS for
+	-- instance). We need to adjust for display scaling in our calculation.
+	w = w / (w / DISPLAY_WIDTH)
+	h = h / (h / DISPLAY_HEIGHT)
+
+	-- https://defold.com/manuals/camera/#converting-mouse-to-world-coordinates
+	local inv = vmath.inv(projection * view)
+	x = (2 * x / w) - 1
+	y = (2 * y / h) - 1
+	z = (2 * z) - 1
+	local x1 = x * inv.m00 + y * inv.m01 + z * inv.m02 + inv.m03
+	local y1 = x * inv.m10 + y * inv.m11 + z * inv.m12 + inv.m13
+	local z1 = x * inv.m20 + y * inv.m21 + z * inv.m22 + inv.m23
+
+	local zoom = math.min(w / DISPLAY_WIDTH, h / DISPLAY_HEIGHT)
+	go.set(camera_id, "orthographic_zoom", zoom)
+	
+	return x1, y1, z1
 end
 
-function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+
+function on_reload(self)
+	-- Reload-handling code if needed
 end
 
-function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+local function nearest_point(self, point_vec2)
+	local field_pos = go.get_position("/field")
+	local field_scale = go.get_scale("/field")
+	
+	local points = {
+        field_pos + vmath.mul_per_elem(field_scale, vmath.vector3(0, 0, 0.2)),
+		field_pos + vmath.mul_per_elem(field_scale, vmath.vector3(0, 160, 0.2)),
+		field_pos + vmath.mul_per_elem(field_scale, vmath.vector3(0, -160, 0.2)),
+		field_pos + vmath.mul_per_elem(field_scale, vmath.vector3(-160, 0, 0.2)),
+		field_pos + vmath.mul_per_elem(field_scale, vmath.vector3(160, 0, 0.2)),
+		field_pos + vmath.mul_per_elem(field_scale, vmath.vector3(160, 160, 0.2)),
+		field_pos + vmath.mul_per_elem(field_scale, vmath.vector3(160, -160, 0.2)),
+		field_pos + vmath.mul_per_elem(field_scale, vmath.vector3(-160, 160, 0.2)),
+		field_pos + vmath.mul_per_elem(field_scale, vmath.vector3(-160, -160, 0.2)),
+		
+	}
+
+	local closest_point = points[1] -- Default to first point
+	local min_distance = vmath.length(point_vec2 - closest_point)
+	local idx = -1
+
+	for _, vec in ipairs(points) do
+		local distance = vmath.length(point_vec2 - vec)
+		
+		if distance < min_distance then
+			min_distance = distance
+			closest_point = vec
+		end
+	end
+
+	idx = (closest_point.x / (field_pos.x + field_scale.x * 160)) + 2 + (((closest_point.y / (field_pos.y + field_scale.y * 160)) * -1) + 1) * 3 -- -160, -160 --> 7 (1 + 6)
+	return {vmath.vector3(closest_point), math.floor(idx + 0.5)}
 end
 
-function fixed_update(self, dt)
-	-- This function is called if 'Fixed Update Frequency' is enabled in the Engine section of game.project
-	-- Can be coupled with fixed updates of the physics simulation if 'Use Fixed Timestep' is enabled in
-	-- Physics section of game.project
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+local function spawn_player(self, position_x, position_y)
+    -- With a fixed projection, action.x and action.y are already in your design (world) space.
+    local worldx, worldy = screen_to_world(position_x, position_y, 0, "/root#camera")
+    local touch_pos = vmath.vector3(worldx, worldy, 0.2)
+
+    local nearest_point = nearest_point(self, touch_pos)
+    local obj_idx = nearest_point[2]
+    local spawn_position = nearest_point[1]
+    
+    if self.positions[obj_idx] == nil then
+        local obj = nil
+        
+        if self.object == 2 then
+            self.object = 1
+            obj = "/field#cross_factory"
+        else
+            self.object = 2
+            obj = "/field#circle_factory"
+        end
+        
+        factory.create(obj, spawn_position)
+        
+        self.positions[obj_idx] = self.object
+    end
 end
 
-function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+local function check_win(self, table_1d)
+	local three_longs = {
+		{1, 2, 3},
+		{4, 5, 6},
+		{7, 8, 9},
+
+		{1, 4, 7},
+		{2, 5, 8},
+		{3, 6, 9},
+
+		{1, 5, 9},
+		{3, 5, 7}
+	}
+	local num_itms = 0
+
+	for i, three_long in pairs(three_longs) do
+		local first, second, third = three_long[1], three_long[2], three_long[3]
+		
+		if table_1d[first] and table_1d[first] == table_1d[second] and table_1d[second] == table_1d[third] then
+			self.won = true
+			return {table_1d[first], three_long} --< This is the winning id!
+		end
+	end
+
+	for _ in pairs(table_1d) do
+		num_itms = num_itms + 1
+	end
+	
+	if num_itms == 9 then
+        self.won = true
+        print("will return 0")
+		return {0}
+	end
+
+	return nil
 end
 
-function on_input(self, action_id, action)
-	if action_id == "touch" and action.released then
-		--factory.load("/field#cross_factory", function(self, url, result) end)
-		--factory.create("/field#cross_factory", vmath.vector3(500, 600, 0.2))
-		print("")
+local function drawWin(self, win_line, winner)
+    -- Code to draw a nice animation of a line connecting the three winning symbols
+    local field_pos = go.get_position("/field")
+	local field_scale = go.get_scale("/field")
+
+    -- Determine color of line
+    local line_color = vmath.vector4(0)
+    print("winner is " .. winner)
+    if winner == 1 then
+        line_color = vmath.vector4(norm_rgb(255), norm_rgb(130), norm_rgb(147), 1) -- 255, 27, 59
+    elseif winner == 2 then
+        line_color = vmath.vector4(norm_rgb(149), norm_rgb(102), norm_rgb(255), 1) -- 77, 7, 255
+    elseif winner == 0 then
+        line_color = vmath.vector4(norm_rgb(255), norm_rgb(255), norm_rgb(255), 1)
+        print("winner is 0")
+    end
+
+    if win_line then
+        -- 1 -> (-160, 160)
+        -- ...
+        -- End points of the connecting line
+        local coordinates_1 = vmath.vector3(((((win_line[1] - 1) % 3)) - 1) * field_scale.x * 160 + field_pos.x, (1 - math.floor((win_line[1] - 1) / 3)) * field_scale.y * 160 + field_pos.y, 1)
+        local coordinates_2 = vmath.vector3(((((win_line[3] - 1) % 3)) - 1) * field_scale.x * 160 + field_pos.x, (1 - math.floor((win_line[3] - 1) / 3)) * field_scale.y * 160 + field_pos.y, 1)
+
+
+        -- Draw line with animation
+        local line_go_url = "/line"
+
+        local line_length = vmath.length(coordinates_1 - coordinates_2)
+
+
+        -- Set the scale of the line
+        go.set_scale(vmath.vector3(0.0001, 10, 1), line_go_url)
+        go.animate(line_go_url, "scale", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(line_length + 0.05*line_length, 10, 1), go.EASING_INOUTCUBIC, 1)
+        local mid_point = coordinates_1 + (coordinates_2 - coordinates_1) * 0.5
+        go.set_position(mid_point, line_go_url)
+
+        -- Set rotation
+        local line_rotation = math.atan2(coordinates_2.y - coordinates_1.y, coordinates_2.x - coordinates_1.x)
+        go.set_rotation(vmath.quat_rotation_z(line_rotation), line_go_url)
+
+		-- Set color
+		go.set(line_go_url .. "#sprite", "tint", line_color)
+    end
+
+    -- Tint Background according to winner
+    go.set("/bg#sprite1", "tint", vmath.mul_per_elem(line_color, vmath.vector4(1, 1, 1, 0)))
+    go.animate("/bg#sprite1", "tint", go.PLAYBACK_ONCE_FORWARD, vmath.mul_per_elem(line_color, vmath.vector4(1, 1, 1, 0.1)), go.EASING_INOUTCUBIC, 0.5)
+end
+
+local function process_win(self, win)
+    if type(win) == "table" and (win[1] == 0 or win[1] == 1 or win[1] == 2) then
+        drawWin(self, win[2], win[1])
 	end
 end
 
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
+function init(self)
+	-- Acquire input focus
+	msg.post(".", "acquire_input_focus")
+
+    -- Initialize DRUID
+	self.druid = druid.new(self, my_style)
+
+    local back_handler = self.druid:new_back_handler(function (self)
+		load_game(self, "main_menu")
+        --msg.post("@system:", "exit", { code = 0 })
+	end)
+
+	-- Set up a fixed projection so that input and rendering use your design resolution.
+	msg.post("@render:", "use_fixed_projection", { near = -1, far = 1 })
+
+	-- Load a factory for the cross and circle
+	factory.load("/field#cross_factory", function(self, url, result) end)
+	factory.load("/field#circle_factory", function(self, url, result) end)
+
+	self.object = 2 -- 2 = cross, 1 = circle
+
+	self.positions = {}
+	self.idx_list = {}
+	self.won = false
+
+	screen_to_world(0, 0, 0, "/root#camera")
+
+    -- Set Background Tint
+    go.set("/bg#sprite1", "tint", vmath.vector4(norm_rgb(255), norm_rgb(255), norm_rgb(255), 0))
+end
+
+function final(self)
+	-- Finalization code if needed
+end
+
+function update(self, dt)
+	-- Frame update code if needed
+end
+
+function fixed_update(self, dt)
+	-- Fixed update code if needed
+end
+
+function on_message(self, message_id, message, sender)
+	-- Message handling code if needed
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") and action.released and self.won ~= true then
+		spawn_player(self, action.x, action.y)
+		local win = check_win(self, self.positions)
+		if win then
+			process_win(self, win)
+		end
+	end
 end

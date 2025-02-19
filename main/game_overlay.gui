@@ -1,0 +1,48 @@
+script: "/main/scripts/gui/handle_back.gui_script"
+fonts {
+  name: "UI Font"
+  font: "/main/UI Font.font"
+}
+nodes {
+  position {
+    x: 320.0
+    y: 1101.0
+  }
+  size {
+    x: 640.0
+    y: 70.0
+  }
+  color {
+    x: 0.365
+    y: 0.212
+    z: 0.659
+  }
+  type: TYPE_BOX
+  id: "top_bar"
+  adjust_mode: ADJUST_MODE_STRETCH
+  layer: "fg"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  scale {
+    x: 0.3
+    y: 0.3
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Go Back\n"
+  ""
+  font: "UI Font"
+  id: "text"
+  parent: "top_bar"
+  inherit_alpha: true
+}
+layers {
+  name: "fg"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

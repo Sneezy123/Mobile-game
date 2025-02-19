@@ -1,5 +1,6 @@
 /.editor_settings
 /.internal
+/.vscode
 /build
 .externalToolBuilders
 .DS_Store

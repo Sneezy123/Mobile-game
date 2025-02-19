@@ -18,5 +18,11 @@ embedded_instances {
   "  data: \"collection: \\\"/main/collections/tic_tac_toe.collection\\\"\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"siedler_von_catan\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/main/collections/siedler_von_catan.collection\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
 }

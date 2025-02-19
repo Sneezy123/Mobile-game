@@ -1,4 +1,4 @@
-font: "/builtins/fonts/vera_mo_bd.ttf"
+font: "/assets/fonts/Lexend-VariableFont_wght.ttf"
 material: "/builtins/fonts/font.material"
 size: 128
 all_chars: true

@@ -8,6 +8,7 @@ local function show(self, proxy) -- <5>
 end
 
 function init(self)
+	
 	msg.post(".", "acquire_input_focus") -- <1>
 	self.current_proxy = nil -- <2>
 	msg.post("#", "show_proxy", { name = "main_menu" }) -- <3>

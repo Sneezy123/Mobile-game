@@ -1,0 +1,36 @@
+local druid = require("druid.druid")
+local my_style = require("main.scripts.util.druid_style")
+
+local function load_buttons(self)
+	self.druid:new_button("top_bar", function (self)
+		load_game(self, "main_menu")
+	end)
+end
+
+
+function init(self)
+	-- Initialize DRUID
+	self.druid = druid.new(self, my_style)
+	
+	load_buttons(self)
+
+	local back_handler = self.druid:new_back_handler(function (self)
+        load_game(self, "main_menu")
+	end)
+end	
+
+function final(self)
+	self.druid:final()
+end
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

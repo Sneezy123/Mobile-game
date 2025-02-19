@@ -1,0 +1,10 @@
+name: "siedler_von_catan"
+scale_along_z: 0
+embedded_instances {
+  id: "ui"
+  data: "components {\n"
+  "  id: \"game_overlay\"\n"
+  "  component: \"/main/game_overlay.gui\"\n"
+  "}\n"
+  ""
+}
